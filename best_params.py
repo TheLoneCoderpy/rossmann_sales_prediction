@@ -19,9 +19,9 @@ def make(X_train, y_train):
         pipeline = make_pipeline(StandardScaler(), KNeighborsRegressor())
         clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         
-        print("get best knn params", X_train.shape, y_train.shape)
+        
         clf.fit(X_train, y_train)
-
+        print("get best knn params", X_train.shape, y_train.shape)
         return clf.best_params_
 
     def get_best_tree_params(X_train, y_train):
@@ -30,8 +30,9 @@ def make(X_train, y_train):
                       "decisiontreeregressor__min_samples_leaf": [4, 8, 16]}
         pipeline = make_pipeline(StandardScaler(), DecisionTreeRegressor())
         clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
-        clf.fit(X_train, y_train)
 
+        clf.fit(X_train, y_train)
+        print("get best knn params", X_train.shape, y_train.shape)
         return clf.best_params_
 
     def get_best_forest_params(X_train, y_train):
@@ -42,7 +43,7 @@ def make(X_train, y_train):
         pipeline = make_pipeline(StandardScaler(), RandomForestRegressor())
         clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         clf.fit(X_train, y_train)
-
+        print("get best knn params", X_train.shape, y_train.shape)
         return clf.best_params_
 
     def get_best_svm_params(X_train, y_train):
@@ -52,7 +53,7 @@ def make(X_train, y_train):
         pipeline = make_pipeline(StandardScaler(), SVR())
         clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         clf.fit(X_train, y_train)
-
+        print("get best knn params", X_train.shape, y_train.shape)
         return clf.best_params_
 
     def get_best_lin_reg_params(X_train, y_train):
@@ -60,7 +61,7 @@ def make(X_train, y_train):
         pipeline = make_pipeline(StandardScaler(), LinearRegression())
         clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         clf.fit(X_train, y_train)
-
+        print("get best knn params", X_train.shape, y_train.shape)
         return clf.best_params_
 
     knn_params = get_best_knn_params(X_train, y_train)
