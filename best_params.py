@@ -17,7 +17,7 @@ def make(X_train, y_train):
                       "kneighborsregressor__weights": ["uniform", "distance"],
                       "kneighborsregressor__algorithm": ["auto", "ball_tree", "kd_tree", "brute"]}
         pipeline = make_pipeline(StandardScaler(), KNeighborsRegressor())
-        clf = GridSearchCV(pipeline, parameters)
+        clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         
         print("get best knn params", X_train.shape, y_train.shape)
         clf.fit(X_train, y_train)
@@ -29,7 +29,7 @@ def make(X_train, y_train):
                       "decisiontreeregressor__min_samples_split": [5, 10, 20],
                       "decisiontreeregressor__min_samples_leaf": [4, 8, 16]}
         pipeline = make_pipeline(StandardScaler(), DecisionTreeRegressor())
-        clf = GridSearchCV(pipeline, parameters)
+        clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         clf.fit(X_train, y_train)
 
         return clf.best_params_
@@ -40,7 +40,7 @@ def make(X_train, y_train):
                       "randomforestregressor__min_samples_split": [2, 10, 20],
                       "randomforestregressor__min_samples_leaf": [1, 4, 8]}
         pipeline = make_pipeline(StandardScaler(), RandomForestRegressor())
-        clf = GridSearchCV(pipeline, parameters)
+        clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         clf.fit(X_train, y_train)
 
         return clf.best_params_
@@ -50,7 +50,7 @@ def make(X_train, y_train):
                       "svr__degree": [4, 5, 6],
                       "svr__C": [10, 100, 1000]}
         pipeline = make_pipeline(StandardScaler(), SVR())
-        clf = GridSearchCV(pipeline, parameters)
+        clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         clf.fit(X_train, y_train)
 
         return clf.best_params_
@@ -58,7 +58,7 @@ def make(X_train, y_train):
     def get_best_lin_reg_params(X_train, y_train):
         parameters = {"linearregression__fit_intercept": [True, False]}
         pipeline = make_pipeline(StandardScaler(), LinearRegression())
-        clf = GridSearchCV(pipeline, parameters)
+        clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         clf.fit(X_train, y_train)
 
         return clf.best_params_
