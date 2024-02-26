@@ -79,10 +79,15 @@ def make(X_train, y_train):
     tree_params = get_best_tree_params(X_train, y_train)
     forest_params = get_best_forest_params(X_train, y_train)
     svm_params = get_best_svm_params(X_train, y_train)
-    lin_reg_params = get_best_lin_reg_params(X_train, y_train)
+    #lin_reg_params = get_best_lin_reg_params(X_train, y_train)
     xg_params = get_best_xg_params(X_train, y_train)
 
-    full_params = {"knn": knn_params, "tree": tree_params, "forest": forest_params, "svm": svm_params, "lin_reg": lin_reg_params, "xg": xg_params}
+    full_params = {"knn": knn_params, 
+                   "tree": tree_params, 
+                   "forest": forest_params, 
+                   "svm": svm_params, 
+                   #"lin_reg": lin_reg_params, 
+                   "xg": xg_params}
 
     with open("best_params.json", "w") as file:
         json.dump(full_params, file)
