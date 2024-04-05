@@ -12,7 +12,6 @@ import json
 
 
 def make(X_train, y_train):
-
     def get_best_knn_params(X_train, y_train):
         parameters = {"kneighborsregressor__n_neighbors": [4, 6],
                       "kneighborsregressor__weights": ["uniform", "distance"],
@@ -57,13 +56,13 @@ def make(X_train, y_train):
         print("Got the best svm params", X_train.shape, y_train.shape)
         return clf.best_params_
 
-    def get_best_lin_reg_params(X_train, y_train):
-        parameters = {"linearregression__fit_intercept": [True, False]}
-        pipeline = make_pipeline(StandardScaler(), LinearRegression())
-        clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
-        clf.fit(X_train, y_train)
-        print("Got the best lin reg params", X_train.shape, y_train.shape)
-        return clf.best_params_
+    #def get_best_lin_reg_params(X_train, y_train):
+    #    parameters = {"linearregression__fit_intercept": [True, False]}
+    #    pipeline = make_pipeline(StandardScaler(), LinearRegression())
+    #    clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
+    #    clf.fit(X_train, y_train)
+    #    print("Got the best lin reg params", X_train.shape, y_train.shape)
+    #    return clf.best_params_
 
     def get_best_xg_params(X_train, y_train):
         parameters = {"xgbregressor__n_estimators": [100, 200, 400],
