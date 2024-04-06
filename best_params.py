@@ -19,7 +19,6 @@ def make(X_train, y_train):
         pipeline = make_pipeline(StandardScaler(), KNeighborsRegressor())
         clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         
-        
         clf.fit(X_train, y_train)
         print("Got the best params", X_train.shape, y_train.shape)
         return clf.best_params_
