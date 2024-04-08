@@ -11,16 +11,25 @@ from sklearn.svm import SVR
 from xgboost import XGBRegressor
 import json
 
+# Die Make Funktion wird aufgerufen, um die besten Parameter für die jeweiligen Modelle zu finden
+# Diese Funktion wird nur einmal aufgerufen, um die besten Parameter zu finden, folgend werden die Parameter in einer JSON Datei gespeichert und im Notebook nurnoch abgerufen
 
 def make(X_train, y_train):
+    # Die Funktion get_best_params wird aufgerufen, um die besten
+    # Parameter für die jeweiligen Modelle zu finden
     def get_best_knn_params(X_train, y_train):
+        # Die Parameter für den KNeighborsRegressor werden definiert
         parameters = {"kneighborsregressor__n_neighbors": [4, 6],
                       "kneighborsregressor__weights": ["uniform", "distance"],
                       "kneighborsregressor__algorithm": ["auto", "ball_tree"]}
+        # Zuerst werden die Daten skaliert, dann wird der KNeighborsRegressor angewendet
         pipeline = make_pipeline(StandardScaler(), KNeighborsRegressor())
+        # GridSearchCV nimmt ein Modell und eine Liste von Parametern, die getestet werden sollen, und führt eine Kreuzvalidierung durch, um die besten Parameter zu finden
         clf = GridSearchCV(pipeline, parameters, verbose=3, n_jobs=-1)
         
+        # Die besten Parameter werden gefunden indem das Modell auf den Trainingsdaten trainiert wird
         clf.fit(X_train, y_train)
+        # Die besten Parameter werden zurückgegeben
         print("Got the best params", X_train.shape, y_train.shape)
         return clf.best_params_
 
@@ -93,24 +102,26 @@ def make(X_train, y_train):
         print("Got the best gradientboost params", X_train.shape, y_train.shape)
         return clf.best_params_
 
+    # Die besten Parameter für die jeweiligen Modelle werden gefunden
     knn_params = get_best_knn_params(X_train, y_train)
     tree_params = get_best_tree_params(X_train, y_train)
     forest_params = get_best_forest_params(X_train, y_train)
-    svm_params = get_best_svm_params(X_train, y_train)
+    #svm_params = get_best_svm_params(X_train, y_train)
     #lin_reg_params = get_best_lin_reg_params(X_train, y_train)
     xg_params = get_best_xg_params(X_train, y_train)
     adaboost_params = get_best_adaboost_params(X_train, y_train)
     gradientboost_params = get_best_gradientboost_params(X_train, y_train)
 
-
+    # Die besten Parameter werden in einem Dictionary gespeichert
     full_params = {"knn": knn_params, 
                    "tree": tree_params, 
                    "forest": forest_params, 
-                   "svm": svm_params, 
-                   "lin_reg": lin_reg_params, 
+                   #"svm": svm_params, 
+                   #"lin_reg": lin_reg_params, 
                    "xg": xg_params,
                    "adaboost": adaboost_params,
                    "gradientboost": gradientboost_params}
 
+    # Die besten Parameter werden in einer JSON Datei gespeichert
     with open("best_params.json", "w") as file:
         json.dump(full_params, file)
